@@ -15,9 +15,11 @@ from sklearn.model_selection import train_test_split
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.25, random_state = 0)
 
 # Probabilitas Data
-prob_train = []
+prob_train_0 = []
+prob_train_1 = []
 range_train = int(len(X_train))
-deret = [i for i in range(range_train)]
+deret_0 = []
+deret_1 = []
 fiture_1 = list(X_train[:,0])
 fiture_2 = list(X_train[:,1])
 
@@ -26,16 +28,27 @@ for i in range(range_train):
 	temp1 = fiture_1.count(X_train[i][0])
 	temp2 = fiture_2.count(X_train[i][1])
 	temp_prob = (temp1/range_train)*(temp2/range_train)
-	prob_train.append(temp_prob)
-plt.plot(deret, prob_train)
+	
+	if Y_train[i]==0:
+		prob_train_0.append(temp_prob)
+		deret_0.append(i)
+	else:
+		prob_train_1.append(temp_prob)
+		deret_1.append(i)
+
+plt.plot(deret_0, prob_train_0, color="chocolate", label="0")
+plt.plot(deret_1, prob_train_1, color="green", label="1")
+plt.legend(loc=(1,0))
 plt.title('Probabilitas data (Training set)')
 plt.xlabel('Data List')
 plt.ylabel('Probabilitas')
 plt.show()
 
-prob_test = []
+prob_test_0 = []
+prob_test_1 = []
 range_test = int(len(X_test))
-deret = [i for i in range(range_test)]
+deret_0 = []
+deret_1 = []
 fiture_1 = list(X_test[:,0])
 fiture_2 = list(X_test[:,1])
 
@@ -44,8 +57,17 @@ for i in range(range_test):
 	temp1 = fiture_1.count(X_test[i][0])
 	temp2 = fiture_2.count(X_test[i][1])
 	temp_prob = (temp1/range_test)*(temp2/range_test)
-	prob_test.append(temp_prob)
-plt.plot(deret, prob_test)
+	
+	if Y_test[i]==0:
+		prob_test_0.append(temp_prob)
+		deret_0.append(i)
+	else:
+		prob_test_1.append(temp_prob)
+		deret_1.append(i)
+
+plt.plot(deret_0, prob_test_0, color="chocolate", label="0")
+plt.plot(deret_1, prob_test_1, color="green", label="1")
+plt.legend(loc=(1,0))
 plt.title('Probabilitas data (Testing set)')
 plt.xlabel('Data List')
 plt.ylabel('Probabilitas')
