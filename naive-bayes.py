@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # Mengimpor dataset
-dataset=pd.read_csv("SeranganNormal.csv",delimiter=';')
+dataset=pd.read_csv("SeranganNormal.csv",delimiter=',')
 X = dataset.iloc[:, [1, 2]].values
 Y = dataset.iloc[:, 5].values
 
@@ -13,6 +13,43 @@ dataset.drop(['Length'],axis=1,inplace=True)
 # Menjadi dataset ke dalam Training set and Test set
 from sklearn.model_selection import train_test_split
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.25, random_state = 0)
+
+# Probabilitas Data
+prob_train = []
+range_train = int(len(X_train))
+deret = [i for i in range(range_train)]
+fiture_1 = list(X_train[:,0])
+fiture_2 = list(X_train[:,1])
+
+for i in range(range_train):
+	# for j in range(int(len(X_train))):
+	temp1 = fiture_1.count(X_train[i][0])
+	temp2 = fiture_2.count(X_train[i][1])
+	temp_prob = (temp1/range_train)*(temp2/range_train)
+	prob_train.append(temp_prob)
+plt.plot(deret, prob_train)
+plt.title('Probabilitas data (Training set)')
+plt.xlabel('Data List')
+plt.ylabel('Probabilitas')
+plt.show()
+
+prob_test = []
+range_test = int(len(X_test))
+deret = [i for i in range(range_test)]
+fiture_1 = list(X_test[:,0])
+fiture_2 = list(X_test[:,1])
+
+for i in range(range_test):
+	# for j in range(int(len(X_train))):
+	temp1 = fiture_1.count(X_test[i][0])
+	temp2 = fiture_2.count(X_test[i][1])
+	temp_prob = (temp1/range_test)*(temp2/range_test)
+	prob_test.append(temp_prob)
+plt.plot(deret, prob_test)
+plt.title('Probabilitas data (Testing set)')
+plt.xlabel('Data List')
+plt.ylabel('Probabilitas')
+plt.show()
 
 from sklearn.preprocessing import StandardScaler
 sc = StandardScaler()
@@ -46,8 +83,6 @@ print("Recall : ", rec)
 print("F1 Score : ", f1s)
 
 
-print(Y_test)
-print(y_pred)
 # Visualisasi hasil model Naive Bayes dari Training set
 from matplotlib.colors import ListedColormap
 X_set, Y_set = X_train, Y_train
@@ -90,7 +125,7 @@ def make_autopct(values):
 labels = Counter(Y_train).keys() # equals to list(set(words))
 sizes = Counter(Y_train).values() # counts the elements
 colors = ['gold', 'yellowgreen', 'lightcoral', 'lightskyblue']
-print(str(labels))
+# print(str(labels))
 # Plot
 plt.pie(sizes, labels=labels, colors=colors,
 autopct=make_autopct(sizes), shadow=True, startangle=140)
@@ -103,7 +138,7 @@ plt.show()
 labels = Counter(Y_test).keys() # equals to list(set(words))
 sizes = Counter(Y_test).values() # counts the elements
 colors = ['gold', 'yellowgreen', 'lightcoral', 'lightskyblue']
-print(str(labels))
+# print(str(labels))
 # Plot
 plt.pie(sizes, labels=labels, colors=colors,
 autopct=make_autopct(sizes), shadow=True, startangle=140)
@@ -117,7 +152,7 @@ plt.show()
 labels = Counter(y_pred).keys() # equals to list(set(words))
 sizes = Counter(y_pred).values() # counts the elements
 colors = ['gold', 'yellowgreen', 'lightcoral', 'lightskyblue']
-print(str(labels))
+# print(str(labels))
 # Plot
 plt.pie(sizes, labels=labels, colors=colors,
 autopct=make_autopct(sizes), shadow=True, startangle=140)
@@ -125,3 +160,5 @@ autopct=make_autopct(sizes), shadow=True, startangle=140)
 plt.axis('equal')
 plt.title("Perbandingan Kelas Hasil Prediksi")
 plt.show()
+
+
