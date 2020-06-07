@@ -182,5 +182,3 @@ autopct=make_autopct(sizes), shadow=True, startangle=140)
 plt.axis('equal')
 plt.title("Perbandingan Kelas Hasil Prediksi")
 plt.show()
-
-
