@@ -4,7 +4,7 @@ import pandas as pd
 
 # Mengimpor dataset
 dataset=pd.read_csv("SeranganNormal.csv",delimiter=',')
-X = dataset.iloc[:, [1, 2]].values
+X = dataset.iloc[:, [1, 2, 3, 4]].values
 Y = dataset.iloc[:, 5].values
 
 dataset.drop(['Time'],axis=1,inplace=True)
